@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXORA · médias</title>
+<link rel="icon" href="brand/logo-v2/final/png/favicon_32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<script>try { var t = localStorage.getItem('nx-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="brand" href="#accueil">
+      <img class="brand-ic" src="brand/logo-v2/final/nexora_icon_white.svg" alt="">
+      <span class="brand-tx"><b>NEXORA</b><small>HQ · Smart Infrastructure</small></span>
+    </a>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Changer de thème">
+        <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg><span>Thème</span>
+      </button>
+      <div class="built" id="built"></div>
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<div class="lightbox" id="lb" hidden>
+  <button class="lb-x" id="lbX" type="button" aria-label="Fermer">×</button>
+  <button class="lb-nav prev" id="lbPrev" type="button" aria-label="Précédent">‹</button>
+  <figure class="lb-fig" id="lbFig"><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav next" id="lbNext" type="button" aria-label="Suivant">›</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

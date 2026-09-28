@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024.00 1024.00" width="1024" height="1024"><rect width="1024.00" height="1024.00" rx="0" fill="#0F2A44"/><g transform="translate(133.51 133.51) scale(6.1046)">
+  <defs>
+    <linearGradient id="sta" gradientUnits="userSpaceOnUse" x1="88" y1="104" x2="88" y2="10">
+      <stop offset="0" stop-color="#1E5E9C"/><stop offset="1" stop-color="#7CC4F0"/>
+    </linearGradient>
+    <linearGradient id="nda" gradientUnits="userSpaceOnUse" x1="14" y1="112" x2="62" y2="64">
+      <stop offset="0" stop-color="#1E5E9C"/><stop offset="1" stop-color="#7CC4F0"/>
+    </linearGradient>
+    <mask id="gapa" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+      <rect width="128" height="128" fill="#fff"/>
+      <path d="M88 108V40" stroke="#000" stroke-width="21" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <path d="M28 90V30L88 100" fill="none" stroke="#FFFFFF" stroke-width="15" stroke-linecap="butt" stroke-linejoin="round" mask="url(#gapa)"/>
+  <path d="M88 102V34" fill="none" stroke="url(#sta)" stroke-width="15" stroke-linecap="round"/>
+  <path d="M88 14L101 34H75Z" fill="url(#sta)" stroke="url(#sta)" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M40.62 81.98A22 22 0 0 1 47.94 90.70M43.96 69.98A34 34 0 0 1 56.83 81.98" fill="none" stroke="url(#nda)" stroke-width="7.5" stroke-linecap="round"/>
+  <path fill-rule="evenodd" fill="url(#nda)" d="M28 89a11 11 0 1 1 0 22a11 11 0 1 1 0-22ZM28 95.5a4.5 4.5 0 1 0 0 9a4.5 4.5 0 1 0 0-9Z"/></g>
+</svg>
