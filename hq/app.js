@@ -109,6 +109,7 @@
         <div class="row">
           <a class="btn white" href="${esc(D.business.ig_url)}" target="_blank" rel="noopener">${ICON.ig}${esc(D.business.instagram)}</a>
           <a class="btn glass" href="${esc(D.business.wa)}" target="_blank" rel="noopener">${ICON.wa}WhatsApp ${esc(D.business.whatsapp)}</a>
+          <a class="btn glass" href="${esc(D.business.website)}" target="_blank" rel="noopener">${ICON.ext}Site web</a>
         </div>
       </div>
       <div class="grid g4" style="margin-top:18px">${kpis.map(([l, v, c]) => `<div class="card kpi" style="--c:${c}"><div class="lab"><i></i>${l}</div><div class="val">${v}</div></div>`).join('')}</div>
@@ -142,6 +143,7 @@
         <div class="row">
           <a class="btn white" href="${esc(D.business.ig_url)}" target="_blank" rel="noopener">${ICON.ig}${esc(D.business.instagram)}</a>
           <a class="btn glass" href="${esc(D.business.wa)}" target="_blank" rel="noopener">${ICON.wa}WhatsApp ${esc(D.business.whatsapp)}</a>
+          <a class="btn glass" href="${esc(D.business.website)}" target="_blank" rel="noopener">${ICON.ext}Site web</a>
           <a class="btn glass" href="${esc(D.business.assets_repo)}" target="_blank" rel="noopener">${ICON.git}Dépôt des médias</a>
         </div>
       </div>
@@ -304,12 +306,14 @@
       ['Rendre une vidéo', 'cd video ; node render.js projects/rl08-ethernet-rooms --lang en'],
       ['Régénérer les posts et stories du batch 2', 'cd instagram\\src2 ; python batch2.py'],
       ['Régénérer les posts du batch 1', 'cd instagram\\src2 ; python build.py'],
+      ['Mettre à jour le site web (puis push de site/dist)', 'python site\\build_site.py'],
     ];
     return head('Infos utiles', 'Contacts, fournisseurs, règles de communication, limites techniques et commandes.') + `
       <div class="grid g2">
         <div class="card info"><h3>Contact & liens</h3><dl class="kv">
           <dt>WhatsApp</dt><dd><a href="${esc(b.wa)}" target="_blank" rel="noopener">${esc(b.whatsapp)}</a></dd>
           <dt>Instagram</dt><dd><a href="${esc(b.ig_url)}" target="_blank" rel="noopener">${esc(b.instagram)}</a></dd>
+          <dt>Site web</dt><dd><a href="${esc(b.website)}" target="_blank" rel="noopener">nexoraraanana.github.io</a></dd>
           <dt>E-mail</dt><dd><a href="mailto:${esc(b.email)}">${esc(b.email)}</a></dd>
           <dt>Médias en ligne</dt><dd><a href="${esc(b.assets_repo)}" target="_blank" rel="noopener">github.com/nexoraraanana/nexora-assets</a></dd>
           <dt>Zone</dt><dd>${esc(b.city)}</dd>
