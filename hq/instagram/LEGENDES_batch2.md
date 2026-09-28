@@ -1,4 +1,4 @@
-# Batch 2 — Légendes (NON publié)
+# Batch 2 — Légendes (NON publié) · version v3 : vrais produits
 
 > Images : `instagram/out_batch2/` · Vidéos : `media/videos/NEXORA_rl06…rl09_*.mp4`
 > Langue : anglais. **Lieu : Ra'anana, Israel** sur chaque post. 5 hashtags max.
@@ -340,4 +340,51 @@ We install PoE, properly, in Ra'anana.
 💬 Free Home Check on WhatsApp: 058-649-7991
 
 #Raanana #PoE #SecurityCameras #CCTV #NEXORA
+
+---
+
+# v3 — vrais produits (28/09) : nouvelles versions de vidéos déjà publiées
+> Instagram ne permet pas de remplacer une vidéo publiée : publier la v3 comme un **nouveau Reel** (et archiver ou supprimer l'ancien dans l'app si tu veux).
+
+## tip02 — Reel v3 · Where does your Wi-Fi actually die?
+
+Where does your Wi-Fi actually die? 📶
+
+A typical 4-room apartment in Ra'anana, with the router hidden in a cabinet: the bedrooms are weak and the mamad is a dead zone.
+Add three access points, wired by cable, and every room turns green.
+
+*Simulation of a typical 4-room apartment.
+💬 Free Home Check on WhatsApp: 058-649-7991
+
+#Raanana #WiFi #HomeNetwork #SmartHome #NEXORA
+
+---
+
+## tip04 — Reel v3 · 5 things to automate at home
+
+5 things you should automate at home 🏠
+
+1️⃣ Lights that turn on by themselves at sunset
+2️⃣ Shutters that close when everyone leaves
+3️⃣ A leak sensor under the sink that warns you instantly
+4️⃣ A front door that locks itself
+5️⃣ One button that says good night to the whole house
+
+We set it all up for you, running locally with Home Assistant, no cloud needed.
+💬 Free Home Check on WhatsApp: 058-649-7991
+
+#Raanana #SmartHome #HomeAutomation #HomeAssistant #NEXORA
+
+---
+
+## tip05 — Reel v3 · Your home on one screen
+
+What if your whole home fit on one screen? 🖥️
+
+Cameras, lights, the front door and the weather, all at a glance. One tap: the lights go off, the door locks and the alarm is on.
+Designed for your home, running locally, no cloud needed.
+
+💬 NEXORA builds custom dashboards in Ra'anana: WhatsApp 058-649-7991
+
+#Raanana #SmartHome #HomeAssistant #Dashboard #NEXORA
 

@@ -8,7 +8,7 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
   };
   const TOPIC = { network: 'var(--network)', security: 'var(--security)', smart: 'var(--smart)', digital: 'var(--digital)', sun: 'var(--sun)' };
-  const STATUS = { published: 'Publié', ready: 'Prêt à publier', archive: 'Archive', internal: 'Interne', other: 'Autre compte' };
+  const STATUS = { published: 'Publié', ready: 'Prêt à publier', v3: 'v3 prête · v2 publiée', archive: 'Archive', internal: 'Interne', other: 'Autre compte' };
   const I = (d) => `<svg viewBox="0 0 24 24">${d}</svg>`;
   const ICON = {
     home: I('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>'),
@@ -29,7 +29,8 @@
     git: I('<path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>'),
   };
 
-  const ready = (arr) => arr.filter((x) => x.status === 'ready').length;
+  const isReady = (x) => x.status === 'ready' || x.status === 'v3';
+  const ready = (arr) => arr.filter(isReady).length;
   const nReady = ready(D.videos || []) + ready(D.carousels || []) + ready(D.tips || []) + ready(D.stories || []);
   const SECTIONS = [
     ['accueil', 'Accueil', ICON.home, null],
@@ -37,7 +38,7 @@
     ['videos', 'Vidéos', ICON.video, (D.videos || []).length],
     ['posts', 'Posts', ICON.posts, (D.carousels || []).length + (D.tips || []).length],
     ['stories', 'Stories', ICON.stories, (D.stories || []).length],
-    ['cameras', 'Caméras', ICON.cam, ((D.cameras || {}).cameras || []).length],
+    ['produits', 'Produits', ICON.cam, ((D.products || {}).products || []).length],
     ['offre', 'Offre & prix', ICON.offer, null],
     ['marque', 'Marque', ICON.brand, null],
     ['infos', 'Infos utiles', ICON.info, null],
@@ -95,8 +96,8 @@
   function accueilPublic() {
     const n = (arr) => (arr || []).length;
     const readyItems = [
-      ...(D.videos || []).filter((v) => v.status === 'ready').map((v) => ({ src: v.poster, t: v.title, go: 'videos', poster: true })),
-      ...(D.carousels || []).filter((c) => c.status === 'ready').map((c) => ({ src: c.slides[0].thumb, t: c.title, go: 'posts' })),
+      ...(D.videos || []).filter(isReady).map((v) => ({ src: v.poster, t: v.title, go: 'videos', poster: true })),
+      ...(D.carousels || []).filter(isReady).map((c) => ({ src: c.slides[0].thumb, t: c.title, go: 'posts' })),
     ].slice(0, 12);
     const kpis = [['Vidéos', n(D.videos), 'var(--security)'], ['Carrousels', n(D.carousels), 'var(--network)'], ['Tips du jour', n(D.tips), 'var(--smart)'], ['Stories', n(D.stories), 'var(--digital)']];
     return `
@@ -129,8 +130,8 @@
       ['Prêts à publier', nReady, 'vidéos, posts, tips, stories', 'var(--sun)'],
     ];
     const readyItems = [
-      ...(D.videos || []).filter((v) => v.status === 'ready').map((v) => ({ src: v.poster, t: v.title, go: 'videos', poster: true })),
-      ...(D.carousels || []).filter((c) => c.status === 'ready').map((c) => ({ src: c.slides[0].thumb, t: c.title, go: 'posts' })),
+      ...(D.videos || []).filter(isReady).map((v) => ({ src: v.poster, t: v.title, go: 'videos', poster: true })),
+      ...(D.carousels || []).filter(isReady).map((c) => ({ src: c.slides[0].thumb, t: c.title, go: 'posts' })),
     ].slice(0, 10);
     return `
       <div class="hero">
@@ -203,7 +204,7 @@
     const list = D.videos || [];
     const f = store.get('nx-vf', 'all');
     const counts = { all: list.length, ready: ready(list), published: list.filter((v) => v.status === 'published').length, archive: list.filter((v) => ['archive', 'internal', 'other'].includes(v.status)).length };
-    const shown = list.filter((v) => f === 'all' || v.status === f || (f === 'archive' && ['archive', 'internal', 'other'].includes(v.status)));
+    const shown = list.filter((v) => f === 'all' || v.status === f || (f === 'ready' && v.status === 'v3') || (f === 'archive' && ['archive', 'internal', 'other'].includes(v.status)));
     return head('Vidéos', 'Reels en anglais avec voix off. « Produits 01 à 04 » utilisent tes vraies photos Hikvision / Provision-ISR (dossier media/videos_produits). Musique de fond optionnelle dans l’app, volume bas.') + `
       <div class="chips">${[['all', 'Toutes'], ['ready', 'Prêtes'], ['published', 'Publiées'], ['archive', 'Archives & autres']].map(([k, l]) => `<button class="chip ${f === k ? 'on' : ''}" type="button" data-vf="${k}">${l}<span class="n">${counts[k]}</span></button>`).join('')}</div>
       <div class="grid auto">${shown.map((v) => `<div class="card media">
@@ -219,7 +220,7 @@
     const cars = D.carousels || [], tips = D.tips || [];
     let body = '';
     if (tab === 'carousels') {
-      const grp = [['Prêts à publier', cars.filter((c) => c.status === 'ready')], ['Publiés', cars.filter((c) => c.status === 'published')]];
+      const grp = [['Prêts à publier', cars.filter(isReady)], ['Publiés', cars.filter((c) => c.status === 'published')]];
       body = grp.map(([t, arr]) => `<div class="h2">${t} <small>${arr.length} carrousels</small></div><div class="grid auto">${arr.map((c) => {
         const g = gal(c.slides.map((s, i) => ({ src: s.full, cap: `${c.title} · slide ${i + 1}` })));
         return `<div class="card media carousel"><div class="thumb" data-gal="${g}" data-i="0"><img loading="lazy" src="${esc(c.slides[0].thumb)}" alt="${esc(c.title)}"><span class="count">${c.slides.length} slide${c.slides.length > 1 ? 's' : ''}</span></div>
@@ -244,7 +245,7 @@
     const hl = D.highlights || [];
     const g = gal(hl.map((h) => ({ src: h.full, cap: h.title })));
     return head('Stories', 'Format 1080×1920. Les liens cliquables (sticker WhatsApp) s’ajoutent dans l’app, pas par l’API.') +
-      block('Prêtes à publier', st.filter((s) => s.status === 'ready'), 'ajouter le sticker lien dans l’app') +
+      block('Prêtes à publier', st.filter(isReady), 'ajouter le sticker lien dans l’app') +
       block('Déjà publiées', st.filter((s) => s.status === 'published'), 'à ranger dans les highlights') +
       `<div class="h2">Couvertures de highlights <small>${hl.length}</small></div><div class="grid auto-s">${hl.map((h, i) => `<div class="card media" style="padding:14px;align-items:center"><div class="thumb" data-gal="${g}" data-i="${i}" style="background:none"><img loading="lazy" src="${esc(h.thumb)}" alt="" style="width:110px;height:110px;border-radius:50%;aspect-ratio:1"></div><div class="t" style="margin-top:10px;text-transform:capitalize">${esc(h.title)}</div></div>`).join('')}</div>`;
   }
@@ -362,28 +363,28 @@
       `<div class="timeline">${j.map((e) => `<div class="card ev"><div class="d">${esc(e.date)}</div><div class="x">${e.html}</div></div>`).join('')}</div>`;
   }
 
-  function cameras() {
-    const db = D.cameras || { cameras: [], types: {} };
-    const list = db.cameras || [];
-    const f = store.get('nx-cf', 'all');
-    const brands = [...new Set(list.map((c) => c.brand))];
-    const shown = list.filter((c) => f === 'all' || c.brand === f);
-    const g = gal(shown.map((c) => ({ src: c.full, cap: `${c.brand} · ${c.type_label}` })));
-    return head('Caméras', 'Base de données des modèles (catalogue/cameras.json). Nouvelles images : les déposer dans « image cameras » puis lancer <code>python catalogue/import_cameras.py</code>.') + `
-      <div class="chips">${[['all', 'Toutes', list.length], ...brands.map((b) => [b, b, list.filter((c) => c.brand === b).length])].map(([k, l, n]) => `<button class="chip ${f === k ? 'on' : ''}" type="button" data-cf="${esc(k)}">${esc(l)}<span class="n">${n}</span></button>`).join('')}</div>
-      <div class="grid auto">${shown.map((c, i) => `<div class="card media">
-        <div class="thumb prod" data-gal="${g}" data-i="${i}"><img loading="lazy" src="${esc(c.full)}" alt="${esc(c.brand + ' ' + c.type_label)}"></div>
-        <div class="meta"><div class="t">${topic(c.brand_id === 'hikvision' ? 'security' : 'digital')}<span>${esc(c.brand)} · ${esc(c.type_label)}</span></div>
-          <div class="row"><span class="badge st-ready">${esc(c.model || c.model_note)}</span><span>${esc(c.id)}</span></div>
-          <p style="font-size:13.5px;color:var(--muted)">${esc(c.use)}</p>
-          ${(c.seen || []).length ? `<ul class="rules" style="--c:var(--network);gap:4px">${c.seen.map((s) => `<li style="font-size:13px">${esc(s)}</li>`).join('')}</ul>` : ''}
-          <div class="row"><span title="${esc(c.original)}">${esc(c.image)}</span></div></div></div>`).join('')}</div>
-      <div class="h2">Quel type pour quel endroit</div>
-      <div class="grid g2">${Object.values(db.types || {}).map((t) => `<div class="card info"><h3>${esc(t.label)}</h3><p>${esc(t.use)}</p></div>`).join('')}</div>
-      <p class="note">Les références exactes (ex. DS-2CD…, DI-…) sont à compléter dans cameras.json : les specs ne s'affichent pas tant que le modèle n'est pas confirmé.</p>`;
+  function produits() {
+    const db = D.products || { products: [], categories: {} };
+    const list = db.products || [];
+    const f = store.get('nx-pf', 'all');
+    const cats = Object.entries(db.categories || {}).filter(([k]) => list.some((p) => p.category === k));
+    const shown = list.filter((p) => f === 'all' || p.category === f);
+    const g = gal(shown.map((p) => ({ src: p.full, cap: `${p.brand} · ${p.label}` })));
+    const qcls = { bonne: 'st-published', 'agrandie par IA': 'st-ready', 'agrandie par IA, source très petite': 'st-other' };
+    const small = list.filter((p) => p.quality === 'agrandie par IA, source très petite');
+    return head('Produits', 'Base de données des vrais visuels (catalogue/produits.json). Les photos sont détourées et prêtes pour les vidéos, posts et stories.') + `
+      <div class="chips">${[['all', 'Tous', list.length], ...cats.map(([k, l]) => [k, l, list.filter((p) => p.category === k).length])].map(([k, l, n]) => `<button class="chip ${f === k ? 'on' : ''}" type="button" data-pf="${esc(k)}">${esc(l)}<span class="n">${n}</span></button>`).join('')}</div>
+      ${small.length ? `<div class="card" style="margin-bottom:18px;border-color:rgba(149,124,255,0.4)"><b>${small.length} image(s) agrandies à partir d'une source minuscule</b> (détails en partie reconstitués par l'IA) : ${small.map((p) => esc(p.label + ' (' + p.brand + ')')).join(' · ')}. Une vraie photo plus grande sera toujours meilleure.</div>` : ''}
+      <div class="grid auto">${shown.map((p, i) => `<div class="card media">
+        <div class="thumb prod" data-gal="${g}" data-i="${i}"><img loading="lazy" src="${esc(p.full)}" alt="${esc(p.label)}"></div>
+        <div class="meta"><div class="t">${topic({ cameras: 'security', enregistrement: 'security', reseau: 'network', acces: 'digital', maison: 'smart', outils: 'sun' }[p.category] || 'network')}<span>${esc(p.label)}</span></div>
+          <div class="row"><b style="color:var(--text)">${esc(p.brand)}</b><span class="badge ${qcls[p.quality] || 'st-archive'}">${esc(p.quality)} · ${p.size[0]}×${p.size[1]}</span></div>
+          <div class="row"><span>${esc(p.model ? 'Réf. ' + p.model : 'Référence exacte à confirmer')}</span></div>
+          ${p.notes ? `<p style="font-size:13px;color:var(--muted)">${esc(p.notes)}</p>` : ''}
+          <div class="row"><span>${esc(p.image)}</span></div></div></div>`).join('')}</div>`;
   }
 
-  const RENDER = { accueil, instagram, videos, posts, stories, cameras, offre, marque, infos, docs, journal };
+  const RENDER = { accueil, instagram, videos, posts, stories, produits, offre, marque, infos, docs, journal };
   if (D.public) {
     const keep = ['accueil', 'videos', 'posts', 'stories', 'marque'];
     for (let i = SECTIONS.length - 1; i >= 0; i--) if (!keep.includes(SECTIONS[i][0])) SECTIONS.splice(i, 1);
@@ -409,12 +410,12 @@
   }
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-copy],[data-vf],[data-pt],[data-cf],[data-doc],[data-hex],[data-cmd],[data-gal]');
+    const t = e.target.closest('[data-copy],[data-vf],[data-pt],[data-pf],[data-doc],[data-hex],[data-cmd],[data-gal]');
     if (!t) return;
     if (t.dataset.copy != null) copy(CAPS[+t.dataset.copy], 'Légende copiée');
     else if (t.dataset.vf) { store.set('nx-vf', t.dataset.vf); route(); }
     else if (t.dataset.pt) { store.set('nx-pt', t.dataset.pt); route(); }
-    else if (t.dataset.cf) { store.set('nx-cf', t.dataset.cf); route(); }
+    else if (t.dataset.pf) { store.set('nx-pf', t.dataset.pf); route(); }
     else if (t.dataset.doc) { store.set('nx-doc', t.dataset.doc); route(); }
     else if (t.dataset.hex) copy(t.dataset.hex, `${t.dataset.hex} copié`);
     else if (t.dataset.cmd != null) copy(t.closest('.cmd').querySelector('code').textContent, 'Commande copiée');
