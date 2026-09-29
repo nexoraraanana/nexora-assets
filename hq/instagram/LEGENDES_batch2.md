@@ -1,5 +1,7 @@
 # Batch 2 — Légendes (NON publié) · version v3 : vrais produits
 
+> ⚠️ **Remplacé par `instagram/BOOST_01/PLAN.md`** (29/09) : légendes finales, 5 hashtags, sans l'offre « Home Check gratuit », qui est abandonnée. Ce fichier reste comme archive.
+
 > Images : `instagram/out_batch2/` · Vidéos : `media/videos/NEXORA_rl06…rl09_*.mp4`
 > Langue : anglais. **Lieu : Ra'anana, Israel** sur chaque post. 5 hashtags max.
 > Reels 06–09 : **voix off Liam** (anglais). Musique de fond optionnelle dans l'app Instagram, volume bas.
